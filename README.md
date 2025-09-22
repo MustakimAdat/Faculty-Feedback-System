@@ -32,28 +32,57 @@ This README is resume-ready: use the project title, short description, tech stac
 
 ---
 
-## 📁 Project structure (example)
+## 📁 Project structure
 
 ```
-faculty-feedback-system/
-├─ app.py                 # Flask application entrypoint
-├─ config.py              # Configuration (DB URI, secret keys)
-├─ requirements.txt       # Python dependencies
-├─ /templates/            # HTML templates (Jinja2)
-│   ├─ base.html
-│   ├─ login.html
-│   ├─ student_dashboard.html
-│   ├─ faculty_dashboard.html
-│   └─ admin_dashboard.html
-├─ /static/
-│   ├─ /css/
-│   ├─ /js/
-│   └─ /images/
-├─ /migrations/           # DB migrations (optional)
-└─ README.md
+├── app
+│   ├── blueprint
+│   │   ├── admin
+│   │   │   └── __pycache__
+│   │   ├── auth
+│   │   │   └── __pycache__
+│   │   └── feedback_form
+│   │       └── __pycache__
+│   ├── models
+│   │   ├── admin
+│   │   ├── feedback_form
+│   │   │   └── __pycache__
+│   │   └── users
+│   │       └── __pycache__
+│   ├── static
+│   │   ├── assets
+│   │   ├── css
+│   │   ├── fonts
+│   │   │   ├── flaticon
+│   │   │   ├── fontawesome
+│   │   │   ├── simple-line-icons
+│   │   │   └── summernote
+│   │   └── js
+│   │       ├── core
+│   │       └── plugin
+│   │           ├── bootstrap-notify
+│   │           ├── chart-circle
+│   │           ├── chart.js
+│   │           ├── datatables
+│   │           ├── jquery-scrollbar
+│   │           ├── jquery-ui-1.12.1.custom
+│   │           ├── jquery-ui-touch-punch
+│   │           ├── jquery.sparkline
+│   │           ├── jqvmap
+│   │           │   └── maps
+│   │           │       └── continents
+│   │           ├── sweetalert
+│   │           └── webfont
+│   ├── templates
+│   │   ├── admin
+│   │   ├── analysis_form
+│   │   ├── auth
+│   │   ├── feedback_form
+│   │   ├── includes
+│   │   └── layouts
+│   └── __pycache__
+└── dummydata
 ```
-
-> Note: adjust the tree above to match your repository before publishing.
 
 ---
 
@@ -115,18 +144,6 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
 ---
 
-## 🔒 Environment variables (suggested)
-
-Put secrets into `config.py` or a `.env` file and never commit them:
-
-```
-SECRET_KEY=your_random_secret
-DATABASE_URI=mysql+pymysql://user:pass@localhost/faculty_feedback_db
-ADMIN_EMAIL=admin@college.edu
-```
-
----
-
 ## 🧩 Usage (roles & flows)
 
 **Student**
@@ -154,42 +171,17 @@ Add your screenshots to a folder `screenshots/` and reference them here. Example
 
 ```markdown
 ![Login](/screenshots/01_login.png)
-![Student Dashboard](/screenshots/02_student_dashboard.png)
 ![Feedback Form](/screenshots/03_feedback_form.png)
 ![Faculty Dashboard](/screenshots/04_faculty_dashboard.png)
 ![Admin Dashboard](/screenshots/05_admin_dashboard.png)
 ![Reports](/screenshots/06_reports.png)
 ```
 
-**Recommendation:** export screenshots at 1200×700 (or similar landscape size) for a crisp GitHub preview. Name files with a leading two-digit index so ordering stays consistent (e.g., `01_login.png`).
+**Recommendation:** export screenshots at 1200×700 (or similar landscape size) for a crisp GitHub preview.
 
 ---
 
-## 🔍 API endpoints (common / example)
-
-> Update these to match your actual routes from `app.py`.
-
-* `GET /` — Home / landing page
-* `GET /login` / `POST /login` — Authentication
-* `GET /student/dashboard` — Student dashboard
-* `GET /faculty/dashboard` — Faculty dashboard
-* `GET /admin/dashboard` — Admin dashboard
-* `POST /feedback` — Submit feedback
-* `GET /feedback/<id>` — View specific feedback
-
----
-
-## ✅ Tips for making the repo resume-ready
-
-* Add a short project summary at the top of your GitHub repo (first 1–2 lines of README) — recruiters will read this.
-* Include 4–6 screenshots to demonstrate UI and core flows.
-* Add `LICENSE` (MIT) and `CONTRIBUTING.md` if you want to show open-source practices.
-* Tag the repo with relevant topics: `flask`, `feedback-system`, `education`, `mysql`.
-* Add a short `How I built it` or `Challenges & learnings` section to highlight your role (useful for interviews).
-
----
-
-## 🔮 Future enhancements (resume/portfolio bullets)
+## 🔮 Future enhancements
 
 * Add chart-based analytics (Chart.js or Plotly) for visual feedback insights.
 * Export reports to CSV / PDF.
