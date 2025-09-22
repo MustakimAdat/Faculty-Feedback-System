@@ -1,0 +1,316 @@
+/* Global Variables (unchanged, kept in :root for global access) */
+:root {
+    --golden: 1.618;
+    --base-unit: 10px;
+    --spacing-xs: var(--base-unit);
+    --spacing-sm: calc(var(--base-unit) * 1.2);
+    --spacing-md: 20px;
+    --spacing-lg: calc(var(--base-unit) * var(--golden));
+    --spacing-xl: calc(var(--base-unit) * 3);
+    --block-spacing: calc(var(--base-unit) * 1);
+    --section-spacing: calc(var(--base-unit) * 2);
+    --container-spacing: calc(var(--base-unit) * 3);
+    --radius-sm: 6px;
+    --radius-md: calc(var(--base-unit) * 1.2);
+    --radius-lg: calc(var(--base-unit) * 2);
+    --radius-circle: 50%;
+    --font-xs: 0.8125rem;
+    --font-sm: 0.9375rem;
+    --font-md: 1.0625rem;
+    --font-lg: 1.375rem;
+    --font-xl: 1.75rem;
+    --height-input: calc(var(--base-unit) * 4.5);
+    --height-header: calc(var(--base-unit) * 7);
+    --primary-color: #3b82f6;
+    --border-color: #d1d5db;
+    --text-color: #4b5563;
+    --background-light: #f9fafb;
+    --background-muted: #f3f4f6;
+}
+
+/* Reset Styles (unchanged, assumed to be in base.css) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles (unchanged, assumed to be in base.css) */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #f0f3f4;
+    font-family: 'Google Sans', sans-serif;
+}
+
+/* Scope all form-specific styles under .form-main */
+.form-main {
+    min-height: 100vh; /* Ensures it covers the full viewport */
+    background-color: #ffffff; /* Overrides body background for this page */
+    padding: 20px; /* Adds some spacing around the content */
+}
+
+.form-main .form-container {
+    max-width: calc(var(--base-unit) * 100);
+    margin: calc(var(--height-header) + var(--section-spacing)) auto var(--section-spacing);
+    padding: 0 var(--spacing-md);
+    margin-top: 8rem; /* Adjust as needed */
+}
+
+.form-main .form-header {
+    position: relative;
+    background: white;
+    padding: var(--container-spacing); /* Merged from duplicate definition */
+    border-radius: var(--radius-sm);
+    margin-bottom: 30px;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-main .form-title {
+    width: 100%;
+    font-size: var(--font-xl);
+    padding: 0.75rem 0;
+    border: none;
+    color: #202124;
+    margin-bottom: 1rem;
+    font-family: 'Google Sans', sans-serif;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+.form-main .form-title:focus {
+    outline: none;
+    background: #f8f9fa;
+    padding-left: 1rem;
+    border-radius: 8px;
+}
+
+.form-main .form-description {
+    width: 100%;
+    min-height: 60px;
+    padding: 0.75rem 0;
+    border: none;
+    color: #5f6368;
+    resize: none;
+    font-family: 'Google Sans', sans-serif;
+    font-size: var(--font-md);
+    line-height: 1.5;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+.form-main .form-description:focus {
+    outline: none;
+    background: #f8f9fa;
+    padding-left: 1rem;
+    border-radius: 8px;
+}
+
+.form-main .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.form-main .preview-btn,
+.form-main .save-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-main .preview-btn:hover,
+.form-main .save-btn:hover {
+    background: #1557b0;
+}
+
+.form-main .form-section {
+    position: relative;
+    padding: 48px 32px 32px;
+    margin-bottom: 32px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-main .section-badge {
+    position: absolute;
+    top: -16px;
+    left: 32px;
+    background: linear-gradient(45deg, #1557b0, #1a73e8);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(26,115,232,0.2);
+    z-index: 2;
+    letter-spacing: 0.3px;
+    transform: translateY(0);
+    transition: transform 0.2s ease;
+}
+
+.form-main .form-section:hover .section-badge {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(26,115,232,0.3);
+}
+
+.form-main .questions-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-main .question-block {
+    position: relative;
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: 24px;
+    transition: all 0.2s ease;
+}
+
+.form-main .question-block:hover {
+    box-shadow: 0 2px 4px rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
+    transform: translateY(-1px);
+}
+
+.form-main .question-content {
+    margin: 1rem 0;
+}
+
+.form-main .question-title {
+    width: 100%;
+    padding: 12px;
+    font-size: var(--font-md);
+    color: #202124;
+    line-height: 1.5;
+    min-height: auto;
+    height: auto;
+    white-space: pre-line;
+    transition: all 0.3s;
+    background: white;
+}
+
+.form-main .question-title:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: #f8f9fa;
+}
+
+.form-main .preview-input-field {
+    width: 100%;
+    height: 60px;
+    padding: 8px 12px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 15px;
+    color: #202124;
+    transition: border-color 0.2s;
+}
+
+.form-main .preview-input-field:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+.form-main .preview-input-field:hover {
+    border-color: #1a73e8;
+}
+
+.form-main .preview-input-field::placeholder {
+    color: #5f6368;
+}
+
+.form-main .question-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid #f0f0f0;
+}
+
+.form-main .question-actions button {
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.form-main .question-actions button:hover {
+    background-color: #f1f3f4;
+}
+
+.form-main .action-buttons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.form-main .add-section,
+.form-main .duplicate-question,
+.form-main .delete-question {
+    padding: 0.5rem;
+    border-radius: var(--radius-circle);
+    transition: background-color 0.3s;
+    width: calc(var(--base-unit) * 5);
+    height: calc(var(--base-unit) * 5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-main .add-section:hover,
+.form-main .duplicate-question:hover,
+.form-main .delete-question:hover {
+    background-color: #f1f3f4;
+}
+
+.form-main .section-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.form-main .nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-main .nav-button:hover {
+    background: #1557b0;
+}
+
+.form-main .nav-button:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+}

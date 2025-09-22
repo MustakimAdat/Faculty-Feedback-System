@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+@font-face {
+    font-family: "aeonik";
+    src: url('./AeonikProTRIAL-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url(../Font/AeonikProTRIAL-Bold.otf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  max-height: 1080px;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* Left side styling */
+.left-side {
+  flex: 0 0 55%;
+  padding: min(4vh, 2rem) min(4vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.logo-container {
+  flex: 0 0 auto;
+}
+
+.logo {
+  height: 85px;
+  width: auto;
+}
+
+.header-text {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.feedback-text, .system-text {
+  color: #007bff;
+  font-family: 'aeonik', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Changed from center */
+  padding-top: 6%; /* Reduced from 8% */
+  max-height: 80%;
+  max-width: 75%;
+  margin-left: 20%;
+  margin-right: 25%;
+}
+
+.welcome-text {
+  color: #007bff;
+  font-family: 'aeonik', sans-serif;
+  font-weight: bold;
+  position: relative;
+  font-size: 52px; /* Slightly increased */
+  margin-bottom: 0.25rem; /* Reduced from 0.75rem */
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.welcome-subtext {
+  color: #757575;
+  font-size: 15px;
+  margin-bottom: 2.5rem;
+  padding-bottom: 15%; /* Reduced from 20% */
+  opacity: 0.75; /* Slightly reduced for subtle hierarchy */
+  line-height: 1.2; /* Reduced from 1.5 */
+  font-weight: 400;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 1.75rem; /* Increased consistent spacing */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem; /* Reduced label margin */
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.85rem; /* Increased padding for better input height */
+  border: 1px solid #e0e0e0; /* Lighter border color */
+  border-radius: 6px; /* Slightly increased border radius */
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Toggle switch styling */
+.form-options {
+  margin: 2rem 0; /* Increased spacing around remember me toggle */
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 20px;
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.sign-in-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-transform: uppercase;
+  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+  margin-top: 1rem;
+}
+
+.sign-in-btn:hover {
+  background: #0056b3;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 1.25rem;
+  color: #666;
+  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Footer styling */
+footer {
+  margin-top: auto;
+  padding-top: min(3vh, 2rem);
+}
+
+.footer-content {
+  text-align: center;
+  font-size: clamp(0.65rem, 1vw, 0.75rem);
+  color: #666;
+}
+
+.footer-content a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Right side styling */
+.right-side {
+  height: 90%;
+  /* padding-left: 13.8%; */
+}
+
+.campus-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .page-container {
+    max-height: none;
+  }
+  
+  .right-side {
+    display: none;
+  }
+  
+  .left-side {
+    flex: 1;
+    padding: min(4vh, 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .left-side {
+    padding: min(3vh, 1.5rem);
+  }
+}
+
+/* For screens larger than 1920px */
+@media (min-width: 1921px) {
+  .page-container {
+    margin: auto;
+  }
+}
+
+/* For screens with different aspect ratios */
+@media (aspect-ratio < 16/9) {
+  .page-container {
+    max-height: 100vh;
+  }
+}

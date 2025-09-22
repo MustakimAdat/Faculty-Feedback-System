@@ -1,0 +1,114 @@
+<!-- Sidebar -->
+<div class="sidebar sidebar-style-2" data-background-color="white">			
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            {% if current_user.is_authenticated %}
+                <!-- User Info -->
+                <div class="user">
+                    <div class="avatar-sm float-left mr-2">
+                        <img src="{{ current_user.avatar_url }}" alt="{{ current_user.username }}'s Avatar" class="avatar-img rounded-circle">
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <span>
+                                {{ current_user.first_name }} {{ current_user.last_name }}
+                                <span class="user-level">
+                                    {{ current_user.email }}
+                                </span>
+                                <span class="caret"></span>
+                            </span>
+                        </a>
+                        <div class="clearfix"></div>
+                        <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#profile">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('auth.logout') }}">
+                                        <span class="link-collapse">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <ul class="nav nav-primary">
+                    <!-- Dashboard Link -->
+                    <li class="nav-item {% if segment == 'dashboard' %} active {% endif %}">
+                        <a href="{{ url_for('feedback_form.form_dashboard') }}">
+                            <i class="fas fa-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+
+                    <!-- Responses Overview and Subjects (only if form is defined) -->
+                    {% if form %}
+                    <li class="nav-item {% if segment == 'analysis' %} active {% endif %}">
+                        <a href="{{ url_for('feedback_form.form_analysis', form_id=form.form_id) }}">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Responses Overview</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if segment == 'subject_analysis' %} active {% endif %}">
+                        <a data-toggle="collapse" href="#subjects" class="collapsed" aria-expanded="{% if segment == 'subject_analysis' %}true{% else %}false{% endif %}">
+                            <i class="fas fa-book"></i>
+                            <p>Subjects</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse {% if segment == 'subject_analysis' %} show {% endif %}" id="subjects">
+                            <ul class="nav nav-collapse">
+                                {% for subject in form.subjects %}
+                                <li class="{% if segment == 'subject_analysis' and subject_name == subject.subject_name %} active {% endif %}">
+                                    <a href="{{ url_for('feedback_form.subject_analysis', form_id=form.form_id, subject_name=subject.subject_name) }}">
+                                        <span class="sub-item">{{ subject.subject_name }}</span>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Admin Section (only for admins) -->
+                    {% if current_user.role == 'admin' %}
+                    <li class="nav-item {% if segment == 'admin' %} active {% endif %}">
+                        <a data-toggle="collapse" href="#admin" class="collapsed" aria-expanded="{% if segment == 'admin' %}true{% else %}false{% endif %}">
+                            <i class="fas fa-user-shield"></i>
+                            <p>Admin</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse {% if segment == 'admin' %} show {% endif %}" id="admin">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ url_for('admin.add_user') }}">
+                                        <span class="sub-item">Add User</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('admin.manage_users') }}">
+                                        <span class="sub-item">Manage Users</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <ul class="nav nav-primary">
+                    <li class="mx-4 mt-2">
+                        <a target="_blank" href="https://appseed.us/admin-dashboards/flask-dashboard-atlantis-dark-pro" class="btn btn-danger btn-block">
+                            <span class="btn-label mr-2"> <i class="fa fa-rocket"></i> </span>PRO Version
+                        </a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- End Sidebar -->

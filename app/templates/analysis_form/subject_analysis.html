@@ -1,0 +1,230 @@
+{% extends "layouts/analysis_base.html" %}
+
+{% block title %} Analysis - {{ form.title }} {% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .table-responsive table td, .table-responsive table th {
+            text-align: center;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+
+                        <h2 class="text-white op-1 md-2">{{ form.title }}</h2>
+                        <h2 class="text-white op-1 md-2">{{ subject.subject_name }}</h2>
+                        <h2 class="text-white op-1 mb-2">{{ subject.faculty_name }}</h2>
+                        <h3 class="text-white op-3 mb-2">No. of feedback received - {{ calculated_data.total_responses }}</h3>
+                    </div>
+                    <div class="ml-md-auto py-2 py-md-0">
+                        <a href="{{ url_for('feedback_form.download_excel', form_id=form.form_id, subject_name=subject.subject_name) }}" class="btn btn-white btn-border btn-round mr-2">Download Excel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-inner mt--5">
+            <div class="row mt--2">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Pie Chart (Average Percentages)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="pieChart" style="width: 50%; height: 50%"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bar Chart (Overall Ratings)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Basic</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Category</th>
+                                        <th>Excellent (%)</th>
+                                        <th>Very Good (%)</th>
+                                        <th>Good (%)</th>
+                                        <th>Average (%)</th>
+                                        <th>Below Average (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Approximate % of total syllabus covered</td>
+                                        <td colspan="5">{{ calculated_data.avg_syllabus_covered }}%</td>
+                                    </tr>
+                                    {% set categories = [
+                                        {"id": 2, "name": "Regularity and punctuality in class", "key": "punctuality"},
+                                        {"id": 3, "name": "Voice is audible and clear", "key": "voice"},
+                                        {"id": 4, "name": "Use of teaching aid other than power point presentation", "key": "aids"},
+                                        {"id": 5, "name": "Lecture preparation", "key": "prep"},
+                                        {"id": 6, "name": "Lesson plan is being followed by teacher", "key": "plan"},
+                                        {"id": 7, "name": "Depth of knowledge related to the course", "key": "depth"},
+                                        {"id": 8, "name": "Reaction on students' comments or questions or in discussion", "key": "reaction"},
+                                        {"id": 9, "name": "Behavior with students", "key": "behavior"},
+                                        {"id": 10, "name": "Pace of teaching", "key": "pace"},
+                                        {"id": 11, "name": "Effectiveness of communication with students", "key": "comm"},
+                                        {"id": 12, "name": "Motivation provided to learn the course", "key": "motiv"},
+                                        {"id": 13, "name": "Explanation of the practical application of the course", "key": "expl"},
+                                        {"id": 14, "name": "Clarity in answering to queries and explanation", "key": "clarity"},
+                                        {"id": 15, "name": "Rate (overall) the classes of the subject", "key": "overall"},
+                                        {"id": 16, "name": "Clear explanation or demonstration of laboratory techniques, procedures", "key": "lab_expl"},
+                                        {"id": 17, "name": "Effective planning of laboratory activities", "key": "lab_activ"},
+                                        {"id": 18, "name": "Enforces to follow safety procedures and protocols in the laboratory", "key": "safety"}
+                                    ] %}
+                                    {% for cat in categories %}
+                                    <tr>
+                                        <td>{{ cat.id }}</td>
+                                        <td>{{ cat.name }}</td>
+                                        <td>{{ calculated_data.fields[cat.key]['5-Excellent'].percentage }}</td>
+                                        <td>{{ calculated_data.fields[cat.key]['4-Very Good'].percentage }}</td>
+                                        <td>{{ calculated_data.fields[cat.key]['3-Good'].percentage }}</td>
+                                        <td>{{ calculated_data.fields[cat.key]['2-Average'].percentage }}</td>
+                                        <td>{{ calculated_data.fields[cat.key]['1-Below Average'].percentage }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>19</td>
+                                        <td style="text-align: center; font-weight: bold; font-size: larger;">Average</td>
+                                        <td style="font-weight: bold; font-size: larger;">{{ calculated_data.averages['5-Excellent'] }}</td>
+                                        <td style="font-weight: bold; font-size: larger;">{{ calculated_data.averages['4-Very Good'] }}</td>
+                                        <td style="font-weight: bold; font-size: larger;">{{ calculated_data.averages['3-Good'] }}</td>
+                                        <td style="font-weight: bold; font-size: larger;">{{ calculated_data.averages['2-Average'] }}</td>
+                                        <td style="font-weight: bold; font-size: larger;">{{ calculated_data.averages['1-Below Average'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    <script src="/static/js/setting-demo2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#basic-datatables').DataTable({});
+        });
+
+        // Pie Chart (Average Percentages)
+        const pieChart = document.getElementById('pieChart').getContext('2d');
+        const pieData = [
+            {{ calculated_data.averages['5-Excellent'] }},
+            {{ calculated_data.averages['4-Very Good'] }},
+            {{ calculated_data.averages['3-Good'] }},
+            {{ calculated_data.averages['2-Average'] }},
+            {{ calculated_data.averages['1-Below Average'] }}
+        ];
+        new Chart(pieChart, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: pieData,
+                    backgroundColor: ["#4caf50", "#1d7af3", "#fdaf4b", "#FF5733", "#C70039"],
+                    borderWidth: 0
+                }],
+                labels: ['Excellent', 'Very Good', 'Good', 'Average', 'Below Average']
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        fontColor: 'rgb(154, 154, 154)',
+                        fontSize: 12,
+                        usePointStyle: true,
+                        padding: 20,
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            return data.labels.map(function(label, index) {
+                                const value = data.datasets[0].data[index];
+                                const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return {
+                                    text: label + ': ' + percentage + '%',
+                                    fillStyle: data.datasets[0].backgroundColor[index],
+                                    hidden: isNaN(data.datasets[0].data[index]) || data.datasets[0].data[index] === null,
+                                    index: index
+                                };
+                            });
+                        }
+                    }
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            const dataset = data.datasets[tooltipItem.datasetIndex];
+                            const total = dataset.data.reduce((a, b) => a + b, 0);
+                            const currentValue = dataset.data[tooltipItem.index];
+                            const percentage = Math.round((currentValue / total) * 100);
+                            return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                        }
+                    }
+                }
+            }
+        });
+
+        // Bar Chart (Overall Ratings)
+        const barChart = document.getElementById('barChart').getContext('2d');
+        const barData = {{ calculated_data.chart_data|tojson }};
+        new Chart(barChart, {
+            type: 'bar',
+            data: {
+                labels: ['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'],
+                datasets: [{
+                    label: "Students",
+                    backgroundColor: ["#4caf50", "#1d7af3", "#fdaf4b", "#FF5733", "#C70039"],
+                    borderColor: 'rgb(23, 125, 255)',
+                    data: barData
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock javascripts %}

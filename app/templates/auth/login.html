@@ -1,0 +1,69 @@
+{% extends 'layouts/auth_base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<h1 class="welcome-text">Welcome Back</h1>
+<p class="welcome-subtext">Enter your email and password to Log in</p>
+<form id="loginForm" method="POST" action="{{ url_for('auth.login') }}">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your email address" required />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Your password" required />
+    </div>
+
+    <p id="message" style="color: red;"></p>
+
+    <div class="form-options">
+        <div class="remember-me">
+            <label class="toggle">
+                <input type="checkbox" id="remember-me" />
+                <span class="slider"></span>
+            </label>
+            <span>Remember me</span>
+        </div>
+    </div>
+
+    <button type="submit" class="sign-in-btn">LOG IN</button>
+
+    <div class="forgot-password">
+        <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+    </div>
+</form>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <label>
+            <input type="checkbox" name="remember"> Remember Me
+        </label>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+</body>
+</html> -->

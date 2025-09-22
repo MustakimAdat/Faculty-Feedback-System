@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Faculty Feedback System - UPL University{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Left side with login form -->
+        <div class="left-side">
+            <div class="header-wrapper">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='assets/logo.svg') }}" alt="UPL University Logo" class="logo" />
+                </div>
+                <div class="header-text">
+                    <div class="text-wrapper">
+                        <span class="feedback-text">Faculty Feedback</span>
+                        <span class="system-text">System</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-container">
+                {% block content %}{% endblock %}
+            </div>
+
+            <footer>
+                <div class="footer-content">
+                    <p>
+                        © 2025, Made with Love and care by <a href="#">UPL University</a>
+                    </p>
+                    <p>
+                        Faculty <a href="#">Feedback System</a> | UPL University of
+                        Sustainable Technology
+                    </p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Right side with image -->
+        <div class="right-side">
+            <img src="{{ url_for('static', filename='assets/campus.jpg') }}" alt="Campus View" class="campus-image" />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% extends "layouts/analysis_base.html" %}
+
+{% block title %} Analysis - {{ form.title }} {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white op-1 md-2">{{ form.title }}</h2>
+                        <h3 class="text-white op-2 mb-2">{{ form.description }}</h3>
+                    </div>
+                    <div class="ml-md-auto py-2 py-md-0">
+                        <a href="#" class="btn btn-white btn-border btn-round mr-2">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-inner mt--5">
+            <div class="row row-card-no-pd">
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                        <i class="flaticon-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-2">
+                                    <div class="numbers">
+                                        <p class="card-category">Total Responses</p>
+                                        <h4 class="card-title">{{ total_responses }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                                        <i class="flaticon-interface-6"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Total Subjects</p>
+                                        <h4 class="card-title">{{ form.subjects|length }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Students Who Submitted</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Enrollment No</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for response in responses %}
+                                    <tr>
+                                        <td>{{ response.student_info.enrollment_number }}</td>
+                                        <td>{{ response.student_info.student_name }}</td>
+                                        <td>{{ response.student_info.email }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    <script src="/static/assets/js/setting-demo2.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#basic-datatables').DataTable({});
+        });
+    </script>
+{% endblock javascripts %}

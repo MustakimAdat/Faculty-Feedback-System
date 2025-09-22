@@ -1,0 +1,153 @@
+{% extends "layouts/form_base.html" %}
+
+{% block title %}Feedback Form{% endblock %}
+
+{% block content %}
+<div class="form-main">
+  <main class="form-container" role="main">
+    <form id="editForm" method="POST">
+      <div class="form-header">
+        <input class="form-title" name="title" aria-label="Form title" placeholder="Form Title" value="{{ form.title }}">
+        <input class="form-description" name="description" aria-label="Form description" placeholder="Form Description" value="{{ form.description }}">
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button type="submit" class="save-btn">
+            <span class="material-icons">save</span> Save
+          </button>
+          <button type="button" class="copy-link-btn" data-view-url="{{ url_for('feedback_form.view_form', form_id=form.form_id) }}" title="Copy Link">
+            <span class="material-icons">link</span> Copy Link
+          </button>
+          <div class="copy-message" style="display: none; color: green; margin-top: 5px;">Link copied to clipboard</div>
+        </div>
+      </div>
+
+      {% if form.subjects and form.subjects|length > 0 %}
+        {% for subject in form.subjects %}
+          <div class="form-section" data-section="2">
+            <h5 class="section-badge" aria-label="Subject">Subject</h5>
+            <div class="questions-container">
+              <div class="question-block" role="region" aria-label="Question">
+                <div class="question-content">
+                  <label for="subject-name" class="question-title">Subject Name</label>
+                  <input type="text" class="preview-input-field subject-name" name="subjects[]" placeholder="Subject Name (CODE)" value="{{ subject.subject_name }}" required>
+                </div>
+                <div class="question-content">
+                  <label for="faculty-name" class="question-title">Faculty Name</label>
+                  <input type="text" class="preview-input-field faculty-name" name="faculties[]" placeholder="Enter Faculty Name" value="{{ subject.faculty_name }}" required>
+                </div>
+                <div class="question-actions">
+                  <div class="action-buttons">
+                    <button type="button" class="add-section" title="Add Section">
+                      <span class="material-icons">add</span> Add Section
+                    </button>
+                    <button type="button" class="duplicate-question" title="Duplicate question">
+                      <span class="material-icons">content_copy</span>
+                    </button>
+                    <button type="button" class="delete-question" title="Delete question">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- No subjects exists: show one blank section -->
+        <div class="form-section" data-section="2">
+          <h5 class="section-badge" aria-label="Subject">Subject</h5>
+          <div class="questions-container">
+            <div class="question-block" role="region" aria-label="Question">
+              <div class="question-content">
+                <label for="subject-name" class="question-title">Subject Name</label>
+                <input type="text" class="preview-input-field subject-name" name="subjects[]" placeholder="Subject Name (CODE)" required>
+              </div>
+              <div class="question-content">
+                <label for="faculty-name" class="question-title">Faculty Name</label>
+                <input type="text" class="preview-input-field faculty-name" name="faculties[]" placeholder="Enter Faculty Name" required>
+              </div>
+              <div class="question-actions">
+                <div class="action-buttons">
+                  <button type="button" class="add-section" title="Add Section">
+                    <span class="material-icons">add</span> Add Section
+                  </button>
+                  <button type="button" class="duplicate-question" title="Duplicate question">
+                    <span class="material-icons">content_copy</span>
+                  </button>
+                  <button type="button" class="delete-question" title="Delete question">
+                    <span class="material-icons">delete</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    </form>
+  </main>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const copyBtn = document.querySelector('.copy-link-btn');
+  const copyMessage = document.querySelector('.copy-message');
+
+  copyBtn.addEventListener('click', function() {
+    const viewUrl = this.getAttribute('data-view-url');
+    const fullUrl = window.location.origin + viewUrl;
+
+    // Try Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(fullUrl).then(function() {
+        copyMessage.style.display = 'block';
+        setTimeout(function() {
+          copyMessage.style.display = 'none';
+        }, 3000);
+      }, function(err) {
+        console.error('Clipboard API failed: ', err);
+        fallbackCopy(fullUrl);
+      });
+    } else {
+      // Fallback for non-secure contexts or unsupported browsers
+      fallbackCopy(fullUrl);
+    }
+  });
+
+  function fallbackCopy(text) {
+    // Create a temporary textarea to copy the text
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed'; // Avoid scrolling to bottom
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      copyMessage.style.display = 'block';
+      setTimeout(function() {
+        copyMessage.style.display = 'none';
+      }, 3000);
+    } catch (err) {
+      console.error('Fallback copy failed: ', err);
+      copyMessage.style.display = 'block';
+      copyMessage.style.color = 'red';
+      copyMessage.textContent = 'Failed to copy link';
+      setTimeout(function() {
+        copyMessage.style.display = 'none';
+        copyMessage.textContent = 'Link copied to clipboard';
+        copyMessage.style.color = 'green';
+      }, 3000);
+    }
+    document.body.removeChild(textArea);
+  }
+});
+</script>
+{% endblock %}
+
+{% block navigation %}
+<!-- Add navigation if needed -->
+{% endblock %}

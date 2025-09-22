@@ -1,0 +1,22 @@
+<div class="form_nav_header">
+    <div class="logo">
+        <a href="#">
+            <img src="../../static/assets/logo.svg" alt="navbar brand" height="50px" width="auto">
+        </a>
+    </div>
+    <div class="form_nav_header_title">
+        <h4>Faculty Feedback System - FFS</h4>
+    </div>
+    <div class="user_profile">
+        <div class="user-icon" id="userIcon">
+            <img src="../../static/assets/user_icon.svg" alt="User Profile" height="40px" width="40px">
+        </div>
+        <div class="user-menu hidden" id="userMenu">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
